@@ -1,21 +1,18 @@
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
- 
+
 export default async function handler(req, res) {
-  // Only allow POST
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
- 
-  const { pixels, name, url } = req.body;
- 
-  // Validate pixels
+
+  const { pixels, name, url, color, grid_x, grid_y, grid_w, grid_h } = req.body;
+
   if (!pixels || typeof pixels !== 'number' || pixels < 10 || pixels > 1000000) {
     return res.status(400).json({ error: 'Invalid pixel count' });
   }
- 
-  // Price in cents ($1 per pixel, so pixels * 100 cents)
+
   const amount = Math.round(pixels) * 100;
- 
+
   try {
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
@@ -33,15 +30,20 @@ export default async function handler(req, res) {
         },
       ],
       mode: 'payment',
-      success_url: `${req.headers.origin}/?success=true&pixels=${pixels}&name=${encodeURIComponent(name || '')}`,
+      success_url: `${req.headers.origin}/?success=true`,
       cancel_url: `${req.headers.origin}/?cancelled=true`,
       metadata: {
         pixels: pixels.toString(),
-        buyer_name: name || '',
+        buyer_name: name || 'Anonymous',
         buyer_url: url || '',
+        buyer_color: color || '#378ADD',
+        grid_x: grid_x.toString(),
+        grid_y: grid_y.toString(),
+        grid_w: grid_w.toString(),
+        grid_h: grid_h.toString(),
       },
     });
- 
+
     res.status(200).json({ url: session.url });
   } catch (err) {
     console.error('Stripe error:', err);
