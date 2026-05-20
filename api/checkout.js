@@ -1,19 +1,22 @@
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
+Copy
+
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+ 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
-
-  const { pixels, name, url, color, grid_x, grid_y, grid_w, grid_h } = req.body;
-
-  if (!pixels || typeof pixels !== 'number' || pixels < 10 || pixels > 1000000) {
-    return res.status(400).json({ error: 'Invalid pixel count' });
-  }
-
-  const amount = Math.round(pixels) * 100;
-
+ 
   try {
+    const { pixels, name, url } = req.body;
+ 
+    if (!pixels || typeof pixels !== 'number' || pixels < 10) {
+      return res.status(400).json({ error: 'Invalid pixel count' });
+    }
+ 
+    const amount = Math.round(pixels) * 100;
+ 
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       line_items: [
@@ -21,8 +24,8 @@ export default async function handler(req, res) {
           price_data: {
             currency: 'usd',
             product_data: {
-              name: `${pixels.toLocaleString()} pixels — Million Dollar Homepage 2.0`,
-              description: name ? `Buyer: ${name}${url ? ' · ' + url : ''}` : undefined,
+              name: `${pixels.toLocaleString()} pixels — The Million Dollar Homepage 2`,
+              description: name ? `Buyer: ${name}${url ? ' · ' + url : ''}` : 'Pixel purchase',
             },
             unit_amount: amount,
           },
@@ -36,14 +39,9 @@ export default async function handler(req, res) {
         pixels: pixels.toString(),
         buyer_name: name || 'Anonymous',
         buyer_url: url || '',
-        buyer_color: color || '#378ADD',
-        grid_x: grid_x.toString(),
-        grid_y: grid_y.toString(),
-        grid_w: grid_w.toString(),
-        grid_h: grid_h.toString(),
       },
     });
-
+ 
     res.status(200).json({ url: session.url });
   } catch (err) {
     console.error('Stripe error:', err);
