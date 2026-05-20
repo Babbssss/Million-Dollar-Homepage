@@ -3,7 +3,24 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Million Dollar Homepage 2.0</title>
+<title>The Million Dollar Homepage 2 — Buy Pixels for $1</title>
+
+<!-- SEO Meta Tags -->
+<meta name="description" content="The Million Dollar Homepage 2 — buy pixel advertising space for $1 per pixel. Own a permanent spot on the internet. Inspired by Alex Tew's original million dollar homepage.">
+<meta name="keywords" content="million dollar homepage, buy pixels, pixel advertising, cheap advertising, internet advertising, pixel art, buy ad space, million dollar homepage 2, online advertising, permanent advertising">
+<meta name="author" content="The Million Dollar Homepage 2">
+<meta name="robots" content="index, follow">
+
+<!-- Open Graph (shows preview when shared on social media) -->
+<meta property="og:title" content="The Million Dollar Homepage 2 — Buy Pixels">
+<meta property="og:description" content="One million pixels. Buy your permanent spot on the internet. Starting from $10.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://million-dollar-homepage-nine.vercel.app">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The Million Dollar Homepage 2">
+<meta name="twitter:description" content="One million pixels. Buy your permanent spot on the internet. Starting from $10.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -37,7 +54,7 @@
   .header-cta:active { transform: scale(0.97); }
 
   /* HERO */
-  .hero { padding: 4rem 2rem 2rem; max-width: 1100px; margin: 0 auto; }
+  .hero { padding: 4rem 2rem 2rem; max-width: 1400px; margin: 0 auto; }
   .hero-tag { display: inline-flex; align-items: center; gap: 6px; background: rgba(232,255,71,0.08); border: 1px solid rgba(232,255,71,0.2); border-radius: 20px; padding: 4px 12px; font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing: 0.05em; margin-bottom: 1.5rem; }
   .hero h1 { font-size: clamp(32px, 5vw, 58px); font-weight: 800; letter-spacing: -0.03em; line-height: 1.05; margin-bottom: 1rem; }
   .hero h1 em { font-style: normal; color: var(--accent); }
@@ -59,16 +76,27 @@
   .progress-fill { height: 100%; background: var(--accent); border-radius: 2px; transition: width 0.6s cubic-bezier(0.4,0,0.2,1); width: 0%; }
 
   /* LAYOUT */
-  .main { max-width: 1100px; margin: 0 auto; padding: 0 2rem 4rem; display: grid; grid-template-columns: 1fr 280px; gap: 20px; align-items: start; }
+  .main { max-width: 1400px; margin: 0 auto; padding: 0 2rem 4rem; display: grid; grid-template-columns: 1fr 260px; gap: 20px; align-items: start; }
 
   /* CANVAS */
-  .canvas-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; }
+  .canvas-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; overflow: hidden; } .canvas-outer { width: 100%; aspect-ratio: 1; overflow: hidden; border-radius: 0; border: none; background: #131313; position: relative; }
   .canvas-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
   .canvas-title { font-size: 12px; font-family: var(--mono); color: var(--muted); letter-spacing: 0.04em; }
   .canvas-legend { display: flex; gap: 14px; }
   .legend-item { display: flex; align-items: center; gap: 5px; font-family: var(--mono); font-size: 10px; color: var(--muted); }
   .legend-swatch { width: 10px; height: 10px; border-radius: 2px; }
-  canvas { display: block; width: 100%; image-rendering: pixelated; cursor: crosshair; user-select: none; border-radius: 4px; border: 1px solid var(--border); }
+  .canvas-controls { display: flex; gap: 6px; align-items: center; margin-bottom: 10px; flex-wrap: wrap; }
+  .canvas-ctrl-btn { background: var(--surface2); border: 1px solid var(--border2); color: var(--text); font-family: var(--mono); font-size: 11px; padding: 4px 10px; border-radius: 5px; cursor: pointer; transition: background .15s; white-space: nowrap; }
+  .canvas-ctrl-btn:hover { background: rgba(255,255,255,0.1); }
+  .zoom-label { background: var(--surface2); border: 1px solid var(--border); color: var(--muted); font-family: var(--mono); font-size: 11px; padding: 4px 8px; border-radius: 5px; display: flex; align-items: center; min-width: 36px; justify-content: center; }
+  .controls-spacer { flex: 1; }
+  .canvas-outer { overflow: hidden; border-radius: 4px; border: none; background: #131313; position: relative; cursor: crosshair; }
+  .canvas-fullscreen-btn { position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.6); border: 1px solid rgba(255,255,255,0.15); color: var(--text); font-family: var(--mono); font-size: 11px; padding: 5px 10px; border-radius: 5px; cursor: pointer; z-index: 10; transition: background .15s; }
+  .canvas-fullscreen-btn:hover { background: rgba(0,0,0,0.85); }
+  .canvas-wrap { position: relative; }
+  .canvas-outer:fullscreen, .canvas-outer:-webkit-full-screen { background: #0a0a0a; display: flex; align-items: center; justify-content: center; width: 100vw; height: 100vh; }
+  .canvas-outer:fullscreen canvas, .canvas-outer:-webkit-full-screen canvas { max-width: 100vh; max-height: 100vh; width: auto !important; height: auto !important; }
+  canvas { display: block; width: 100% !important; height: 100% !important; image-rendering: pixelated; cursor: crosshair; user-select: none; }
   .hover-info { margin-top: 10px; padding: 10px 14px; background: var(--surface2); border-radius: 6px; font-family: var(--mono); font-size: 12px; min-height: 42px; display: flex; align-items: center; gap: 10px; color: var(--muted); }
   .hi-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--muted); flex-shrink: 0; }
   .hi-name { color: var(--text); font-weight: 500; }
@@ -199,7 +227,7 @@
 <body>
 
 <header class="header">
-  <div class="logo"><div class="logo-dot"></div>MDH 2.0</div>
+  <div class="logo"><div class="logo-dot"></div>MDH 2</div>
   <div class="header-stats">
     <div class="header-stat">sold: <span id="hSold">0</span> px</div>
     <div class="header-stat">raised: <span id="hMoney">$0</span></div>
@@ -213,8 +241,8 @@
     <span style="width:6px;height:6px;background:var(--accent);border-radius:50%;display:inline-block"></span>
     Live · 1,000,000 pixels available
   </div>
-  <h1>The Million<br>Dollar <em>Homepage</em><br>2.0</h1>
-  <p class="hero-sub">One million pixels. One dollar each. Your image, your link, your permanent spot on the internet.</p>
+  <h1>The Million<br>Dollar <em>Homepage</em><br>2</h1>
+  <p class="hero-sub">One million pixels. One dollar each. Buy as little as 10 pixels ($10) or as many as you want.</p>
   <div class="stats-row">
     <div class="stat-pill"><div class="stat-pill-label">Pixels sold</div><div class="stat-pill-value green" id="sSold">0</div></div>
     <div class="stat-pill"><div class="stat-pill-label">Available</div><div class="stat-pill-value" id="sAvail">1,000,000</div></div>
@@ -229,17 +257,26 @@
 
 <main class="main">
   <div class="canvas-wrap">
-    <div class="canvas-header">
+    <div class="canvas-header" style="position:relative;">
       <div class="canvas-title">1000 × 1000 canvas — click to pick your spot, then choose a size</div>
       <div class="canvas-legend">
-        <div class="legend-item"><div class="legend-swatch" style="background:#222"></div>available</div>
+        <div class="legend-item"><div class="legend-swatch" style="background:#e8e6e1;border:1px solid #ccc"></div>available</div>
         <div class="legend-item"><div class="legend-swatch" style="background:#378ADD"></div>taken</div>
         <div class="legend-item"><div class="legend-swatch" style="background:var(--accent)"></div>hover</div>
         <div class="legend-item"><div class="legend-swatch" style="background:var(--green)"></div>selected</div>
       </div>
     </div>
     <div class="mode-banner" id="modeBanner">👆 Click and drag on the grid to select your pixel block</div>
-    <canvas id="grid" width="1000" height="1000"></canvas>
+    <div class="canvas-outer" id="canvasOuter">
+      <canvas id="grid" width="1000" height="1000" style="transform-origin: 0 0; display: block;"></canvas>
+    </div>
+    <div class="canvas-controls">
+      <button class="canvas-ctrl-btn" onclick="zoomOut()">－</button>
+      <div class="zoom-label" id="zoomLabel">1×</div>
+      <button class="canvas-ctrl-btn" onclick="zoomIn()">＋</button>
+      <button class="canvas-ctrl-btn" onclick="zoomReset()">Reset</button>
+      <button class="canvas-ctrl-btn" onclick="toggleFullscreen()" id="fsBtn">⛶ Full</button>
+    </div>
     <div class="reservation-bar" id="reservationBar">
       <div class="res-dot"></div>
       <div class="res-text">Spot reserved! Complete your purchase before time runs out.</div>
@@ -265,10 +302,10 @@
     <div class="card">
       <div class="card-title">Buy pixel blocks</div>
       <div class="buy-options">
-        <button class="buy-btn primary" onclick="openModal(10)">10 pixels <span class="price">$10</span></button>
-        <button class="buy-btn" onclick="openModal(100)">100 pixels <span class="price">$100</span></button>
-        <button class="buy-btn" onclick="openModal(400)">400 pixels <span class="price">$400</span></button>
+        <button class="buy-btn primary" onclick="openModal(100)">100 pixels <span class="price">$100</span></button>
+        <button class="buy-btn" onclick="openModal(500)">500 pixels <span class="price">$500</span></button>
         <button class="buy-btn" onclick="openModal(1000)">1,000 pixels <span class="price">$1,000</span></button>
+        <button class="buy-btn" onclick="openModal(5000)">5,000 pixels <span class="price">$5,000</span></button>
         <button class="buy-btn" onclick="openModal(0)">Custom amount <span class="price">$1/px</span></button>
       </div>
     </div>
@@ -294,10 +331,25 @@
       <div class="card-title">The original story</div>
       <p style="font-size:12px;color:var(--muted);line-height:1.7;font-family:var(--mono)">In 2005, Alex Tew sold 1,000,000 pixels at $1 each to fund university — raising <strong style="color:var(--text)">$1,037,100</strong>. The last 1,000 sold for $38,100 on eBay. This is the sequel.</p>
     </div>
+
+    <div class="card" style="border-color:rgba(71,255,138,0.15);background:rgba(71,255,138,0.03)">
+      <div class="card-title">Contact</div>
+      <div style="display:flex;flex-direction:column;gap:8px;margin-top:2px">
+        <a href="mailto:bdrastgar@gmail.com" style="display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11px;color:var(--muted);text-decoration:none;transition:color .15s" onmouseover="this.style.color='var(--green)'" onmouseout="this.style.color='var(--muted)'">
+          <span style="font-size:14px">✉️</span> Email: bdrastgar@gmail.com
+        </a>
+        <a href="https://www.tiktok.com/@million.dollar.homepage2" target="_blank" style="display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11px;color:var(--muted);text-decoration:none;transition:color .15s" onmouseover="this.style.color='var(--green)'" onmouseout="this.style.color='var(--muted)'">
+          <span style="font-size:14px">🎵</span> TikTok: @million.dollar.homepage2
+        </a>
+        <a href="https://www.instagram.com/million.dollar.homepage2" target="_blank" style="display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11px;color:var(--muted);text-decoration:none;transition:color .15s" onmouseover="this.style.color='var(--green)'" onmouseout="this.style.color='var(--muted)'">
+          <span style="font-size:14px">📸</span> Insta: @million.dollar.homepage2
+        </a>
+      </div>
+    </div>
   </div>
 </main>
 
-<footer>The Million Dollar Homepage 2.0 &nbsp;·&nbsp; 1px = $1 &nbsp;·&nbsp; Built with love and ambition</footer>
+<footer>The Million Dollar Homepage 2 &nbsp;·&nbsp; Built with love and ambition</footer>
 
 <!-- MODAL -->
 <div class="modal-overlay" id="modalOverlay">
@@ -311,8 +363,8 @@
     </div>
 
     <div class="field" id="customField" style="display:none">
-      <label>Pixel count <span class="optional">(min 10, multiples of 10)</span></label>
-      <input type="number" id="customPx" placeholder="e.g. 50" min="10" step="10" oninput="updateCustom(this.value)">
+      <label>Pixel count <span class="optional">(min 10 pixels = $10)</span></label>
+      <input type="number" id="customPx" placeholder="e.g. 50" min="10" step="1" oninput="updateCustom(this.value)">
     </div>
 
     <div class="field">
@@ -384,7 +436,41 @@
 <script>
 const canvas = document.getElementById('grid');
 const ctx = canvas.getContext('2d');
-const GRID = 100, BLOCK = 10, W = 1000, H = 1000;
+const GRID = 1000, BLOCK = 1, W = 1000, H = 1000;
+
+// ── ZONES ─────────────────────────────────────────────────────────────────────
+// Grid is split into 3x3 sections, each 333px wide/tall (center gets remainder)
+const Z1 = 333, Z2 = 667; // zone boundaries
+
+const ZONES = [
+  { name: 'Top Left',      x1:0,  y1:0,  x2:Z1, y2:Z1, price:1.0, color:'rgba(100,100,255,0.15)' },
+  { name: 'Top Center',    x1:Z1, y1:0,  x2:Z2, y2:Z1, price:1.5, color:'rgba(255,180,0,0.15)'   },
+  { name: 'Top Right',     x1:Z2, y1:0,  x2:GRID,y2:Z1,price:1.0, color:'rgba(100,100,255,0.15)' },
+  { name: 'Middle Left',   x1:0,  y1:Z1, x2:Z1, y2:Z2, price:1.5, color:'rgba(255,180,0,0.15)'   },
+  { name: 'Center',        x1:Z1, y1:Z1, x2:Z2, y2:Z2, price:2.0, color:'rgba(232,255,71,0.12)'  },
+  { name: 'Middle Right',  x1:Z2, y1:Z1, x2:GRID,y2:Z2,price:1.5, color:'rgba(255,180,0,0.15)'   },
+  { name: 'Bottom Left',   x1:0,  y1:Z2, x2:Z1, y2:GRID,price:1.0,color:'rgba(100,100,255,0.15)' },
+  { name: 'Bottom Center', x1:Z1, y1:Z2, x2:Z2, y2:GRID,price:1.5,color:'rgba(255,180,0,0.15)'   },
+  { name: 'Bottom Right',  x1:Z2, y1:Z2, x2:GRID,y2:GRID,price:1.0,color:'rgba(100,100,255,0.15)'}
+];
+
+function getZone(gx, gy) {
+  return ZONES.find(z => gx >= z.x1 && gx < z.x2 && gy >= z.y1 && gy < z.y2) || ZONES[0];
+}
+
+function getSelectionPrice(r) {
+  if (!r) return 0;
+  // Calculate weighted price based on how many pixels are in each zone
+  let total = 0;
+  for (const zone of ZONES) {
+    const ox1 = Math.max(r.x, zone.x1), oy1 = Math.max(r.y, zone.y1);
+    const ox2 = Math.min(r.x + r.w, zone.x2), oy2 = Math.min(r.y + r.h, zone.y2);
+    if (ox2 > ox1 && oy2 > oy1) {
+      total += (ox2 - ox1) * (oy2 - oy1) * zone.price;
+    }
+  }
+  return Math.round(total);
+}
 
 const ads = [];
 const adImages = {};
@@ -516,8 +602,8 @@ function draw(hx, hy) {
       ctx.setLineDash([5, 3]);
       ctx.strokeRect(sx + 1, sy + 1, sw - 2, sh - 2);
       ctx.setLineDash([]);
-      const px = r.w * r.h * 10;
-      const label = isDragging ? ('$' + px.toLocaleString()) : (clear ? 'BUY →' : 'TAKEN');
+      const px = r.w * r.h;
+      const label = isDragging ? ('$' + getSelectionPrice(r).toLocaleString()) : (clear ? 'BUY →' : 'TAKEN');
       const fs = Math.min(sw / 5, 12);
       if (fs >= 7) {
         ctx.fillStyle = clear ? 'rgba(71,255,138,0.95)' : 'rgba(255,100,100,0.95)';
@@ -548,13 +634,35 @@ function draw(hx, hy) {
 
   // Draw hover highlight (only if no reservation active)
   if (reservedGX < 0 && hx >= 0 && hy >= 0 && !cells[hy * GRID + hx]) {
-    ctx.fillStyle = 'rgba(232,255,71,0.15)';
+    ctx.fillStyle = 'rgba(100,180,255,0.35)';
     ctx.fillRect(hx * BLOCK, hy * BLOCK, BLOCK, BLOCK);
   }
 
-  // Grid lines
-  ctx.strokeStyle = 'rgba(255,255,255,0.04)'; ctx.lineWidth = 0.5; ctx.setLineDash([]);
-  for (let i = 0; i <= GRID; i++) {
+  // Draw zone borders and labels only (no fill)
+  ZONES.forEach(zone => {
+    const zx = zone.x1 * BLOCK, zy = zone.y1 * BLOCK;
+    const zw = (zone.x2 - zone.x1) * BLOCK, zh = (zone.y2 - zone.y1) * BLOCK;
+    // Zone border only
+    ctx.strokeStyle = 'rgba(255,255,255,0.12)';
+    ctx.lineWidth = 1;
+    ctx.setLineDash([4, 4]);
+    ctx.strokeRect(zx + 1, zy + 1, zw - 2, zh - 2);
+    ctx.setLineDash([]);
+    // Zone label
+    const fs = Math.min(zw / 8, 14);
+    if (fs >= 6) {
+      ctx.fillStyle = zone.price === 2.0 ? 'rgba(232,255,71,0.6)' : zone.price === 1.5 ? 'rgba(255,180,0,0.5)' : 'rgba(180,180,255,0.5)';
+      ctx.font = '600 ' + fs + 'px DM Mono, monospace';
+      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.fillText(zone.name, zx + zw/2, zy + zh/2 - fs * 0.8);
+      ctx.font = '500 ' + Math.round(fs*0.85) + 'px DM Mono, monospace';
+      ctx.fillText('$' + zone.price.toFixed(2) + '/px', zx + zw/2, zy + zh/2 + fs * 0.6);
+    }
+  });
+
+  // Subtle grid lines (only every 10px for performance)
+  ctx.strokeStyle = 'rgba(255,255,255,0.03)'; ctx.lineWidth = 0.5; ctx.setLineDash([]);
+  for (let i = 0; i <= GRID; i += 10) {
     ctx.beginPath(); ctx.moveTo(i*BLOCK,0); ctx.lineTo(i*BLOCK,H); ctx.stroke();
     ctx.beginPath(); ctx.moveTo(0,i*BLOCK); ctx.lineTo(W,i*BLOCK); ctx.stroke();
   }
@@ -580,7 +688,7 @@ function getSelectionRect() {
 function selectionPixels() {
   const r = getSelectionRect();
   if (!r) return 0;
-  return r.w * r.h * 10;
+  return r.w * r.h; // raw pixel count
 }
 
 function isSelectionClear() {
@@ -608,17 +716,26 @@ function updateSelectionUI() {
   const r = getSelectionRect();
   if (!r) return;
   const px = selectionPixels();
+  const price = getSelectionPrice(r);
   const clear = isSelectionClear();
+  const zone = getZone(Math.floor((r.x + r.x + r.w)/2), Math.floor((r.y + r.y + r.h)/2));
   const bar = document.getElementById('selectionBar');
   if (bar) {
     bar.style.display = 'flex';
-    document.getElementById('selPixels').textContent = px.toLocaleString() + ' pixels · $' + px.toLocaleString();
-    document.getElementById('selCoords').textContent = r.w + ' × ' + r.h + ' block at (' + r.x + ', ' + r.y + ')';
+    document.getElementById('selPixels').textContent = px.toLocaleString() + ' pixels · $' + price.toLocaleString();
+    // Check how many zones the selection spans
+    const spannedZones = ZONES.filter(z => {
+      const ox1 = Math.max(r.x, z.x1), oy1 = Math.max(r.y, z.y1);
+      const ox2 = Math.min(r.x + r.w, z.x2), oy2 = Math.min(r.y + r.h, z.y2);
+      return ox2 > ox1 && oy2 > oy1;
+    });
+    const zoneLabel = spannedZones.length === 1 ? spannedZones[0].name + ' zone' : spannedZones.length + ' zones';
+    document.getElementById('selCoords').textContent = r.w + ' × ' + r.h + ' across ' + zoneLabel;
     const buyBtn = document.getElementById('selBuyBtn');
     if (clear) {
       buyBtn.disabled = false;
       buyBtn.style.opacity = '1';
-      buyBtn.textContent = 'Buy this spot →';
+      buyBtn.textContent = 'Buy this spot — $' + price.toLocaleString() + ' →';
     } else {
       buyBtn.disabled = true;
       buyBtn.style.opacity = '0.4';
@@ -627,7 +744,7 @@ function updateSelectionUI() {
   }
   document.getElementById('modeBanner').textContent =
     clear
-      ? '✅ ' + px.toLocaleString() + ' pixels selected ($' + px.toLocaleString() + ') — click "Buy this spot" or drag to resize'
+      ? '✅ ' + px.toLocaleString() + ' pixels · $' + price.toLocaleString() + ' (' + zone.name + ' zone @ $' + zone.price + '/px) — click "Buy this spot" or drag to resize'
       : '❌ Some of those pixels are taken — drag to pick a clear area';
 }
 
@@ -823,7 +940,7 @@ function openModal(px) {
 
   // Use actual dragged selection size if available
   const selR = getSelectionRect();
-  const effectivePx = (selR && reservedGX < 0) ? selR.w * selR.h * 10 : px;
+  const effectivePx = (selR && reservedGX < 0) ? getSelectionPrice(selR) : px;
 
   if (isCustom && !selR) {
     document.getElementById('customPx').value = '';
@@ -831,11 +948,18 @@ function openModal(px) {
     document.getElementById('mTotal').textContent = '$—';
     document.getElementById('mBreakdown').textContent = '— pixels × $1.00';
   } else {
-    const showPx = effectivePx || px;
-    document.getElementById('mPill').textContent = showPx.toLocaleString() + 'px · $' + showPx.toLocaleString();
-    document.getElementById('mTotal').textContent = '$' + showPx.toLocaleString();
-    document.getElementById('mBreakdown').textContent = showPx.toLocaleString() + ' pixels × $1.00';
-    pendingPixels = showPx;
+    const rawPixels = selR ? (selR.w * selR.h) : (px || 100);
+    const zonePrice = selR ? getSelectionPrice(selR) : (px || 100);
+    const spannedZonesModal = selR ? ZONES.filter(z => {
+      const ox1 = Math.max(selR.x, z.x1), oy1 = Math.max(selR.y, z.y1);
+      const ox2 = Math.min(selR.x + selR.w, z.x2), oy2 = Math.min(selR.y + selR.h, z.y2);
+      return ox2 > ox1 && oy2 > oy1;
+    }) : [];
+    const modalZoneLabel = spannedZonesModal.length === 1 ? spannedZonesModal[0].name + ' zone' : spannedZonesModal.length + ' zones (mixed pricing)';
+    document.getElementById('mPill').textContent = rawPixels.toLocaleString() + 'px · $' + zonePrice.toLocaleString();
+    document.getElementById('mTotal').textContent = '$' + zonePrice.toLocaleString();
+    document.getElementById('mBreakdown').textContent = rawPixels.toLocaleString() + ' pixels across ' + modalZoneLabel;
+    pendingPixels = zonePrice;
   }
   ['mName','mUrl','mEmail'].forEach(id => document.getElementById(id).value = '');
 
@@ -849,7 +973,7 @@ function openModal(px) {
 
 function tryReserveForSize(px) {
   if (selectedGX < 0) return;
-  const cells_needed = Math.max(1, Math.ceil(px / 10));
+  const cells_needed = Math.max(1, Math.ceil(px / 1));
   const cols = Math.ceil(Math.sqrt(cells_needed));
   const rows = Math.ceil(cells_needed / cols);
   // Try to fit block starting at clicked cell, adjusting if near edges
@@ -867,7 +991,7 @@ function closeModal() {
 }
 
 function updateCustom(val) {
-  const px = Math.max(10, Math.round(parseInt(val)/10)*10) || 0;
+  const px = Math.max(10, parseInt(val)) || 0;
   if (px) {
     pendingPixels = px;
     document.getElementById('mPill').textContent = px.toLocaleString()+'px · $'+px.toLocaleString();
@@ -893,17 +1017,19 @@ async function confirmPurchase() {
   if (!px) {
     const custom = parseInt(document.getElementById('customPx').value);
     if (!custom || custom < 10) { document.getElementById('customPx').focus(); return; }
-    px = Math.max(10, Math.round(custom/10)*10);
+    px = Math.max(10, parseInt(custom));
   }
 
   closeModal();
 
   // ── Call backend for exact pixel pricing ─────────────────────────────────
+  const selR = getSelectionRect();
+  const finalPrice = selR ? getSelectionPrice(selR) : px;
   try {
     const res = await fetch('/api/checkout', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ pixels: px, name, url })
+      body: JSON.stringify({ pixels: finalPrice, name, url })
     });
     const data = await res.json();
     if (data.url) { window.location.href = data.url; return; }
@@ -922,7 +1048,7 @@ async function confirmPurchase() {
     clearSelection();
   } else {
     // Fallback auto-place
-    const cells_needed = Math.max(1, Math.ceil(px / 10));
+    const cells_needed = Math.max(1, Math.ceil(px / 1));
     const cols = Math.ceil(Math.sqrt(cells_needed));
     const rows = Math.ceil(cells_needed / cols);
     outer2: for (let gy2 = 0; gy2 <= GRID - rows; gy2++) {
@@ -947,6 +1073,113 @@ function showToast(msg) {
 
 document.getElementById('modalOverlay').addEventListener('click', e => { if (e.target === e.currentTarget) closeModal(); });
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+// ── ZOOM ──────────────────────────────────────────────────────────────────────
+let zoomLevel = 1;
+let panX = 0, panY = 0;
+let isPanning = false;
+let panStartX = 0, panStartY = 0;
+let panStartPX = 0, panStartPY = 0;
+const MIN_ZOOM = 1, MAX_ZOOM = 20;
+const canvasOuter = document.getElementById('canvasOuter');
+
+function applyZoom() {
+  canvas.style.transform = `translate(${panX}px, ${panY}px) scale(${zoomLevel})`;
+  document.getElementById('zoomLabel').textContent = zoomLevel.toFixed(1) + '×';
+  // Clamp pan so canvas doesn't go out of bounds
+  clampPan();
+}
+
+function clampPan() {
+  const outerW = canvasOuter.offsetWidth;
+  const outerH = canvasOuter.offsetHeight;
+  const scaledW = W * zoomLevel;
+  const scaledH = H * zoomLevel;
+  panX = Math.min(0, Math.max(outerW - scaledW, panX));
+  panY = Math.min(0, Math.max(outerH - scaledH, panY));
+  canvas.style.transform = `translate(${panX}px, ${panY}px) scale(${zoomLevel})`;
+}
+
+function zoomIn() {
+  zoomLevel = Math.min(MAX_ZOOM, parseFloat((zoomLevel * 1.5).toFixed(1)));
+  applyZoom();
+}
+
+function zoomOut() {
+  zoomLevel = Math.max(MIN_ZOOM, parseFloat((zoomLevel / 1.5).toFixed(1)));
+  if (zoomLevel === 1) { panX = 0; panY = 0; }
+  applyZoom();
+}
+
+function zoomReset() {
+  zoomLevel = 1; panX = 0; panY = 0;
+  applyZoom();
+}
+
+// Scroll to zoom
+canvasOuter.addEventListener('wheel', e => {
+  e.preventDefault();
+  const rect = canvasOuter.getBoundingClientRect();
+  const mouseX = e.clientX - rect.left;
+  const mouseY = e.clientY - rect.top;
+  const factor = e.deltaY < 0 ? 1.15 : 0.87;
+  const newZoom = Math.min(MAX_ZOOM, Math.max(MIN_ZOOM, zoomLevel * factor));
+  // Zoom toward mouse position
+  panX = mouseX - (mouseX - panX) * (newZoom / zoomLevel);
+  panY = mouseY - (mouseY - panY) * (newZoom / zoomLevel);
+  zoomLevel = parseFloat(newZoom.toFixed(2));
+  applyZoom();
+}, { passive: false });
+
+// Pan when zoomed in (middle mouse or space+drag)
+canvasOuter.addEventListener('mousedown', e => {
+  if (e.button === 1 || e.button === 2 || (e.button === 0 && zoomLevel > 1 && e.altKey)) {
+    isPanning = true;
+    panStartX = e.clientX; panStartY = e.clientY;
+    panStartPX = panX; panStartPY = panY;
+    canvasOuter.style.cursor = 'grab';
+    e.preventDefault();
+  }
+});
+
+window.addEventListener('mousemove', e => {
+  if (!isPanning) return;
+  panX = panStartPX + (e.clientX - panStartX);
+  panY = panStartPY + (e.clientY - panStartY);
+  clampPan();
+});
+
+window.addEventListener('mouseup', e => {
+  if (isPanning) { isPanning = false; canvasOuter.style.cursor = 'crosshair'; }
+});
+
+// Override getGridPos to account for zoom, pan, and fullscreen centering
+function getGridPos(e) {
+  const canvasRect = canvas.getBoundingClientRect();
+  // Use the actual canvas bounding rect so it works in fullscreen too
+  const scaleX = GRID / canvasRect.width;
+  const scaleY = GRID / canvasRect.height;
+  const cx = Math.floor((e.clientX - canvasRect.left) * scaleX);
+  const cy = Math.floor((e.clientY - canvasRect.top) * scaleY);
+  return { gx: Math.max(0, Math.min(GRID-1, cx)), gy: Math.max(0, Math.min(GRID-1, cy)) };
+}
+
+// ── FULLSCREEN ────────────────────────────────────────────────────────────────
+function toggleFullscreen() {
+  if (!document.fullscreenElement) {
+    canvasOuter.requestFullscreen().catch(err => console.log('Fullscreen error:', err));
+    document.getElementById('fsBtn').textContent = '✕ Exit';
+  } else {
+    document.exitFullscreen();
+    document.getElementById('fsBtn').textContent = '⛶ Full';
+  }
+}
+
+document.addEventListener('fullscreenchange', () => {
+  if (!document.fullscreenElement) {
+    document.getElementById('fsBtn').textContent = '⛶ Full';
+  }
+});
 </script>
 </body>
 </html>
