@@ -76,7 +76,7 @@
   .progress-fill { height: 100%; background: var(--accent); border-radius: 2px; transition: width 0.6s cubic-bezier(0.4,0,0.2,1); width: 0%; }
 
   /* LAYOUT */
-  .main { max-width: 1400px; margin: 0 auto; padding: 0 2rem 4rem; display: flex; flex-direction: column; gap: 20px; }
+  .main { max-width: 1400px; margin: 0 auto; padding: 0 2rem 4rem; display: grid; grid-template-columns: 1fr 260px; gap: 20px; align-items: start; }
 
   /* CANVAS */
   .canvas-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; overflow: hidden; } .canvas-outer { width: 100%; aspect-ratio: 1; overflow: hidden; border-radius: 0; border: none; background: #131313; position: relative; }
@@ -103,7 +103,7 @@
   .hi-sub { color: var(--muted); }
 
   /* SIDEBAR */
-  .sidebar { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+  .sidebar { display: flex; flex-direction: column; gap: 14px; }
   .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; }
   .card-title { font-family: var(--mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 12px; }
   .buy-options { display: flex; flex-direction: column; gap: 7px; }
@@ -214,13 +214,13 @@
   .mode-banner { background: rgba(232,255,71,0.08); border: 1px solid rgba(232,255,71,0.18); border-radius: 6px; padding: 8px 12px; font-family: var(--mono); font-size: 11px; color: var(--accent); margin-bottom: 10px; text-align: center; letter-spacing: 0.02em; }
 
   @media (max-width: 740px) {
+    .main { grid-template-columns: 1fr; }
     .header-stats { display: none; }
     .hero { padding: 2rem 1.25rem 1rem; }
     .main { padding: 0 1.25rem 3rem; }
     .hero h1 { font-size: 28px; }
     .stats-row { gap: 8px; }
     .stat-pill { min-width: 110px; }
-    .sidebar { grid-template-columns: 1fr; }
   }
 </style>
 </head>
