@@ -676,6 +676,61 @@ function draw(hx, hy) {
 
 draw(-1, -1);
 
+// ── LOAD PURCHASES FROM DATABASE ─────────────────────────────────────────────
+async function loadPurchases() {
+  try {
+    const res = await fetch('/api/purchases');
+    if (!res.ok) return;
+    const data = await res.json();
+    if (!data.purchases || !data.purchases.length) return;
+
+    data.purchases.forEach(purchase => {
+      const gx = purchase.grid_x;
+      const gy = purchase.grid_y;
+      const cols = purchase.grid_w;
+      const rows = purchase.grid_h;
+      const id = ads.length + 1;
+
+      for (let dy = 0; dy < rows; dy++)
+        for (let dx = 0; dx < cols; dx++)
+          cells[(gy+dy)*GRID+(gx+dx)] = id;
+
+      ads.push({
+        x: gx, y: gy, w: cols, h: rows,
+        name: purchase.name,
+        url: purchase.url || '',
+        color: purchase.color || '#378ADD',
+        pixels: purchase.pixels
+      });
+
+      totalSold += purchase.pixels;
+
+      if (purchase.image_url) {
+        const img = new Image();
+        const adIndex = ads.length - 1;
+        img.onload = () => { adImages[adIndex] = img; draw(-1,-1); };
+        img.src = purchase.image_url;
+      }
+    });
+
+    updateStats();
+    draw(-1, -1);
+  } catch(err) {
+    console.log('Could not load purchases:', err);
+  }
+}
+
+// Check if returning from successful payment
+const urlParams = new URLSearchParams(window.location.search);
+if (urlParams.get('success') === 'true') {
+  setTimeout(() => {
+    showToast('Payment successful! Your pixels will appear shortly.');
+    loadPurchases();
+  }, 2000);
+}
+
+loadPurchases();
+
 // ── DRAG-TO-SELECT ────────────────────────────────────────────────────────────
 let isDragging = false;
 let dragStartGX = -1, dragStartGY = -1;
