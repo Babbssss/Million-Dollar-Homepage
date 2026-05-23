@@ -76,7 +76,7 @@
   .progress-fill { height: 100%; background: var(--accent); border-radius: 2px; transition: width 0.6s cubic-bezier(0.4,0,0.2,1); width: 0%; }
 
   /* LAYOUT */
-  .main { max-width: 1400px; margin: 0 auto; padding: 0 2rem 4rem; display: grid; grid-template-columns: 1fr 260px; gap: 20px; align-items: start; }
+  .main { max-width: 1400px; margin: 0 auto; padding: 0 2rem 4rem; display: flex; flex-direction: column; gap: 20px; }
 
   /* CANVAS */
   .canvas-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; overflow: hidden; } .canvas-outer { width: 100%; aspect-ratio: 1; overflow: hidden; border-radius: 0; border: none; background: #131313; position: relative; }
@@ -103,7 +103,7 @@
   .hi-sub { color: var(--muted); }
 
   /* SIDEBAR */
-  .sidebar { display: flex; flex-direction: column; gap: 14px; }
+  .sidebar { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
   .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; }
   .card-title { font-family: var(--mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 12px; }
   .buy-options { display: flex; flex-direction: column; gap: 7px; }
@@ -214,13 +214,13 @@
   .mode-banner { background: rgba(232,255,71,0.08); border: 1px solid rgba(232,255,71,0.18); border-radius: 6px; padding: 8px 12px; font-family: var(--mono); font-size: 11px; color: var(--accent); margin-bottom: 10px; text-align: center; letter-spacing: 0.02em; }
 
   @media (max-width: 740px) {
-    .main { grid-template-columns: 1fr; }
     .header-stats { display: none; }
     .hero { padding: 2rem 1.25rem 1rem; }
     .main { padding: 0 1.25rem 3rem; }
     .hero h1 { font-size: 28px; }
     .stats-row { gap: 8px; }
     .stat-pill { min-width: 110px; }
+    .sidebar { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -233,7 +233,6 @@
     <div class="header-stat">raised: <span id="hMoney">$0</span></div>
     <div class="header-stat">buyers: <span id="hBuyers">0</span></div>
   </div>
-  <button class="header-cta" onclick="openModal(100)">Buy pixels</button>
 </header>
 
 <section class="hero">
@@ -241,7 +240,7 @@
     <span style="width:6px;height:6px;background:var(--accent);border-radius:50%;display:inline-block"></span>
     Live · 1,000,000 pixels available
   </div>
-  <h1>The Million<br>Dollar <em>Homepage</em><br>2</h1>
+  <h1>The Million Dollar<br><em>Homepage</em> 2</h1>
   <p class="hero-sub">One million pixels. One dollar each. Buy as little as 10 pixels ($10) or as many as you want.</p>
   <div class="stats-row">
     <div class="stat-pill"><div class="stat-pill-label">Pixels sold</div><div class="stat-pill-value green" id="sSold">0</div></div>
@@ -299,14 +298,26 @@
   </div>
 
   <div class="sidebar">
-    <div class="card">
-      <div class="card-title">Buy pixel blocks</div>
-      <div class="buy-options">
-        <button class="buy-btn primary" onclick="openModal(100)">100 pixels <span class="price">$100</span></button>
-        <button class="buy-btn" onclick="openModal(500)">500 pixels <span class="price">$500</span></button>
-        <button class="buy-btn" onclick="openModal(1000)">1,000 pixels <span class="price">$1,000</span></button>
-        <button class="buy-btn" onclick="openModal(5000)">5,000 pixels <span class="price">$5,000</span></button>
-        <button class="buy-btn" onclick="openModal(0)">Custom amount <span class="price">$1/px</span></button>
+    <div class="card" style="border-color:rgba(232,255,71,0.15);background:rgba(232,255,71,0.03)">
+      <div class="card-title">Pricing zones</div>
+      <div style="display:flex;flex-direction:column;gap:8px;font-family:var(--mono);font-size:12px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <span style="color:var(--muted)">🟡 Center</span>
+          <span style="color:var(--accent);font-weight:500;">$2.00/px</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <span style="color:var(--muted)">🟠 Mid zones</span>
+          <span style="color:#ffb400;font-weight:500;">$1.50/px</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <span style="color:var(--muted)">🔵 Corners</span>
+          <span style="color:#8888ff;font-weight:500;">$1.00/px</span>
+        </div>
+        <div style="height:1px;background:var(--border);margin:4px 0;"></div>
+        <div style="color:var(--muted);font-size:10px;line-height:1.6;">Drag on the grid to select your spot. The price updates automatically based on which zone you pick.</div>
+        <button class="buy-btn primary" style="margin-top:4px;" onclick="document.getElementById('canvasOuter').scrollIntoView({behavior:'smooth'})">
+          Pick my spot on the grid ↓
+        </button>
       </div>
     </div>
 
@@ -325,11 +336,6 @@
         <div class="step-item"><div class="step-num">03</div><div>Choose a color or upload your own image</div></div>
         <div class="step-item"><div class="step-num">04</div><div>Pay and your spot appears on the grid permanently</div></div>
       </div>
-    </div>
-
-    <div class="card" style="border-color:rgba(232,255,71,0.15);background:rgba(232,255,71,0.03)">
-      <div class="card-title">The original story</div>
-      <p style="font-size:12px;color:var(--muted);line-height:1.7;font-family:var(--mono)">In 2005, Alex Tew sold 1,000,000 pixels at $1 each to fund university — raising <strong style="color:var(--text)">$1,037,100</strong>. The last 1,000 sold for $38,100 on eBay. This is the sequel.</p>
     </div>
 
     <div class="card" style="border-color:rgba(71,255,138,0.15);background:rgba(71,255,138,0.03)">
@@ -1024,12 +1030,13 @@ async function confirmPurchase() {
 
   // ── Call backend for exact pixel pricing ─────────────────────────────────
   const selR = getSelectionRect();
-  const finalPrice = selR ? getSelectionPrice(selR) : px;
+  const finalPrice = (selR ? getSelectionPrice(selR) : px) || px || 100;
+  console.log('Sending to checkout:', { pixels: finalPrice, name, url });
   try {
     const res = await fetch('/api/checkout', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ pixels: finalPrice, name, url })
+      body: JSON.stringify({ pixels: Number(finalPrice), name: name || 'Anonymous', url: url || '' })
     });
     const data = await res.json();
     if (data.url) { window.location.href = data.url; return; }
