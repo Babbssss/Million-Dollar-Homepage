@@ -1086,12 +1086,25 @@ async function confirmPurchase() {
   // ── Call backend for exact pixel pricing ─────────────────────────────────
   const selR = getSelectionRect();
   const finalPrice = (selR ? getSelectionPrice(selR) : px) || px || 100;
-  console.log('Sending to checkout:', { pixels: finalPrice, name, url });
+  const gridX = selR ? selR.x : (reservedGX >= 0 ? reservedGX : 0);
+  const gridY = selR ? selR.y : (reservedGY >= 0 ? reservedGY : 0);
+  const gridW = selR ? selR.w : (reservedCols || 1);
+  const gridH = selR ? selR.h : (reservedRows || 1);
+  console.log('Sending to checkout:', { pixels: finalPrice, grid_x: gridX, grid_y: gridY });
   try {
     const res = await fetch('/api/checkout', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ pixels: Number(finalPrice), name: name || 'Anonymous', url: url || '' })
+      body: JSON.stringify({
+        pixels: Number(finalPrice),
+        name: name || 'Anonymous',
+        url: url || '',
+        color: color || '#378ADD',
+        grid_x: gridX,
+        grid_y: gridY,
+        grid_w: gridW,
+        grid_h: gridH
+      })
     });
     const data = await res.json();
     if (data.url) { window.location.href = data.url; return; }
