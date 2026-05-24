@@ -6,9 +6,7 @@ const supabase = createClient(
   process.env.SUPABASE_SERVICE_KEY
 );
  
-export const config = {
-  api: { bodyParser: false },
-};
+export const config = { api: { bodyParser: false } };
  
 async function getRawBody(req) {
   return new Promise((resolve, reject) => {
@@ -29,11 +27,7 @@ export default async function handler(req, res) {
  
   let event;
   try {
-    event = stripe.webhooks.constructEvent(
-      rawBody,
-      sig,
-      process.env.STRIPE_WEBHOOK_SECRET
-    );
+    event = stripe.webhooks.constructEvent(rawBody, sig, process.env.STRIPE_WEBHOOK_SECRET);
   } catch (err) {
     console.error('Webhook signature error:', err.message);
     return res.status(400).json({ error: 'Invalid signature' });
@@ -46,9 +40,9 @@ export default async function handler(req, res) {
     try {
       const { error } = await supabase.from('pixel_purchases').insert({
         stripe_session_id: session.id,
-        name: meta.buyer_name,
-        url: meta.buyer_url,
-        color: meta.buyer_color,
+        name: meta.buyer_name || 'Anonymous',
+        url: meta.buyer_url || '',
+        color: meta.buyer_color || '#378ADD',
         pixels: parseInt(meta.pixels),
         grid_x: parseInt(meta.grid_x),
         grid_y: parseInt(meta.grid_y),
