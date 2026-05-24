@@ -6,12 +6,15 @@ export default async function handler(req, res) {
   }
  
   try {
-    console.log('Request body:', JSON.stringify(req.body));
-    
     const body = req.body || {};
-    const pixels = Number(body.pixels || body.amount || 0);
+    const pixels = Number(body.pixels || 0);
     const name = body.name || 'Anonymous';
     const url = body.url || '';
+    const color = body.color || '#378ADD';
+    const grid_x = Number(body.grid_x ?? -1);
+    const grid_y = Number(body.grid_y ?? -1);
+    const grid_w = Number(body.grid_w ?? 0);
+    const grid_h = Number(body.grid_h ?? 0);
  
     if (!pixels || pixels < 10) {
       return res.status(400).json({ error: 'Invalid pixel count: ' + pixels });
@@ -21,19 +24,17 @@ export default async function handler(req, res) {
  
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
-      line_items: [
-        {
-          price_data: {
-            currency: 'usd',
-            product_data: {
-              name: `${pixels.toLocaleString()} pixels — The Million Dollar Homepage 2`,
-              description: name ? `Buyer: ${name}${url ? ' · ' + url : ''}` : 'Pixel purchase',
-            },
-            unit_amount: amount,
+      line_items: [{
+        price_data: {
+          currency: 'usd',
+          product_data: {
+            name: `${pixels.toLocaleString()} pixels — The Million Dollar Homepage 2`,
+            description: `Buyer: ${name}${url ? ' · ' + url : ''}`,
           },
-          quantity: 1,
+          unit_amount: amount,
         },
-      ],
+        quantity: 1,
+      }],
       mode: 'payment',
       success_url: `${req.headers.origin}/?success=true`,
       cancel_url: `${req.headers.origin}/?cancelled=true`,
@@ -41,6 +42,11 @@ export default async function handler(req, res) {
         pixels: pixels.toString(),
         buyer_name: name,
         buyer_url: url,
+        buyer_color: color,
+        grid_x: grid_x.toString(),
+        grid_y: grid_y.toString(),
+        grid_w: grid_w.toString(),
+        grid_h: grid_h.toString(),
       },
     });
  
