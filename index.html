@@ -864,7 +864,16 @@ canvas.addEventListener('mousedown', e => {
   if (e.button !== 0) return;
   const { gx, gy } = getGridPos(e);
   const idx = cells[gy * GRID + gx];
-  if (idx) { clearSelection(); updateHoverInfo(gx, gy); return; }
+  if (idx) {
+    clearSelection();
+    updateHoverInfo(gx, gy);
+    // Open their link if they have one
+    const ad = ads[idx - 1];
+    if (ad && ad.url) {
+      window.open(ad.url, '_blank');
+    }
+    return;
+  }
   if (reservedGX >= 0) { openModal(100); return; }
   isDragging = true;
   dragStartGX = gx; dragStartGY = gy;
@@ -886,6 +895,13 @@ canvas.addEventListener('mousemove', e => {
   }
   if (gx === hGX && gy === hGY) return;
   hGX = gx; hGY = gy;
+  // Change cursor to pointer if hovering over a taken pixel with a URL
+  const hIdx = cells[gy * GRID + gx];
+  if (hIdx && ads[hIdx-1] && ads[hIdx-1].url) {
+    canvas.style.cursor = 'pointer';
+  } else {
+    canvas.style.cursor = 'crosshair';
+  }
   draw(gx, gy); updateHoverInfo(gx, gy);
 });
 
